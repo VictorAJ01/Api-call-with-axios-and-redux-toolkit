@@ -1,17 +1,22 @@
 import { Box, Heading, Text, Flex, Button } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "./userSlice";
+import { fetchUsers, removeUser } from "./userSlice";
 import User from "../../assets/images/image.jpg";
-import { MdMyLocation } from "react-icons/md";
+import { MdMyLocation, MdDelete } from "react-icons/md";
 
 const Staffs = () => {
   const user = useSelector((state) => state.users);
-  console.log({ user: user });
+  // console.log({ user: user });
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
+
+  const handleRemoveUser = (user) => {
+    // console.log(user.users);
+    dispatch(removeUser(user));
+  };
 
   return (
     <Box
@@ -44,26 +49,57 @@ const Staffs = () => {
           <Box>
             <Flex
               paddingY={{ base: "1rem", md: "1.5rem", lg: "1rem" }}
-              gap={{ base: ".3rem", md: "1rem", lg: "1rem" }}
+              justifyContent="space-between"
             >
               <Box
-                width={{ base: "3rem", md: "5rem", lg: "5%" }}
-                className="border"
-                padding=".1rem"
+                display="flex"
+                gap={{ base: ".3rem", md: "1rem", lg: "1rem" }}
               >
-                <img src={User} alt="userImage" />
-              </Box>
-              <Box>
-                <Heading
-                  fontSize={{ base: "1rem", md: "2rem", lg: "1.8rem" }}
-                  key={person.id}
+                <Box
+                  width={{ base: "3rem", md: "5rem", lg: "4rem" }}
+                  className="border"
+                  padding=".1rem"
                 >
-                  {person.name}
-                </Heading>
-                <Text key={person.username}>{person.username}</Text>
+                  <img src={User} alt="userImage" />
+                </Box>
+                <Box>
+                  <Heading
+                    fontSize={{ base: "1rem", md: "2rem", lg: "1.8rem" }}
+                    key={person.id}
+                  >
+                    {person.name}
+                  </Heading>
+                  <Text key={person.username}>{person.username}</Text>
+                </Box>
+                <Button
+                  padding={{ lg: ".5rem" }}
+                  leftIcon={<MdMyLocation />}
+                  bgColor="#b56c60"
+                  color="#fff"
+                  _hover={{
+                    bgColor: "#b56c60",
+                  }}
+                  _active={{
+                    bgColor: "#b56c60",
+                  }}
+                  display={{ base: "none", md: "initial", lg: "initial" }}
+                >
+                  {person.address.city}
+                </Button>
               </Box>
-              <Button padding={{ lg: ".5rem" }} leftIcon={<MdMyLocation />}>
-                {person.address.city}
+              <Button
+                bgColor="#b56c60"
+                color="#fff"
+                leftIcon={<MdDelete />}
+                _hover={{
+                  bgColor: "#b56c60",
+                }}
+                _active={{
+                  bgColor: "#b56c60",
+                }}
+                onClick={() => handleRemoveUser(person._id)}
+              >
+                Delete
               </Button>
             </Flex>
             <Box
