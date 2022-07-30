@@ -50,6 +50,7 @@ const Staffs = () => {
             <Flex
               paddingY={{ base: "1rem", md: "1.5rem", lg: "1rem" }}
               justifyContent="space-between"
+              alignItems={{ base: "center", md: "initial", lg: "center" }}
             >
               <Box
                 display="flex"
